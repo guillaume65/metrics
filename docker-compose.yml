@@ -9,6 +9,8 @@ services:
       - ./data/influxdb:/var/lib/influxdb
       - ./conf/influxdb:/etc/influxdb/
     restart: always
+    networks:
+      - iot-net
 
   telegraf:
     container_name: telegraf
@@ -18,6 +20,8 @@ services:
       - ./conf/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
       - /var/run/docker.sock:/var/run/docker.sock
     restart: always
+    networks:
+      - iot-net
     
   grafana:
     container_name: grafana
@@ -32,3 +36,11 @@ services:
     depends_on:
       - influxdb
     restart: always
+    networks:
+      - iot-net
+
+networks:
+  iot-net:
+    external:
+      name: iot-net
+
