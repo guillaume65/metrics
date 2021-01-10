@@ -6,7 +6,7 @@ services:
     ports:
       - "8086:8086"
     volumes:
-      - ./data/influxdb:/var/lib/influxdb
+      - influx_data:/var/lib/influxdb
       - ./conf/influxdb:/etc/influxdb/
     restart: always
     networks:
@@ -29,7 +29,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./data/grafana:/var/lib/grafana
+      - grafana_data:/var/lib/grafana
       - ./log/grafana:/var/log/grafana
       - ./conf/grafana/grafana.ini:/etc/grafana/grafana.ini
     depends_on:
@@ -42,4 +42,11 @@ networks:
   iot-net:
     external:
       name: iot-net
+
+volumes:
+  influx_data:
+    external: true
+
+  grafana_data:
+    external: true
 
